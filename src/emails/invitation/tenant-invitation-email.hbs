@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation to Join {{tenantName}}</title>
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        .role {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .password-info {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .password {
+            font-weight: bold;
+            color: #c0392b;
+            font-size: 1.1em;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 0.8em;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>You're Invited to Join {{tenantName}}!</h1>
+        <p>Hello {{firstName}} {{lastName}},</p>
+        <p>You have been invited to join <span style="font-weight: bold;">{{tenantName}}</span> as a <span class="role">{{role}}</span>.</p>
+        <p>To accept this invitation, please click on the following link:</p>
+        <p><a href="{{invitationLink}}">Accept Invitation</a></p>
+        <p>After accepting the invitation, you will be prompted to set up your password. If you are unable to use the button above, copy and paste the following link into your browser:</p>
+        <p><a href="{{invitationLink}}">{{invitationLink}}</a></p>
+
+        <p>For your initial login, please use the temporary password below:</p>
+
+        <div class="password-info">
+            <p>Temporary Password:</p>
+            <p class="password">{{temporaryPassword}}</p>
+        </div>
+
+        <p>Please verify your email address and set up your permanent password after logging in.</p>
+
+        <p>If you have any questions, please contact our support team.</p>
+
+        <div class="footer">
+            <p>This is an automated invitation email from our system. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html>
