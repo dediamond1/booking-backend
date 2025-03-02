@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { doubleCsrf } from 'csrf-csrf';
 import rateLimit from 'express-rate-limit';
-import tenantMiddleware from './src/middleware/tenant.middleware';
+import { tenantMiddleware } from './src/middleware/tenant.middleware';
 import authRoutes from './src/routes/auth';
 import organizationRoutes from './src/routes/organization';
 import tenantRoutes from './src/routes/tenant';

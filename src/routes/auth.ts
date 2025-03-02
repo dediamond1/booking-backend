@@ -1,17 +1,36 @@
-import express, { RequestHandler } from 'express';
-import { createUserHandler, loginUserHandler, acceptTenantInvitation, changePasswordAfterAcceptance, getUser } from '../controllers/user.controller';
+import express from 'express';
+import AuthController from '../controllers/auth.controller';
 import { verifyEmail } from '../controllers/verification.controller';
-import authMiddleware from '../middleware/auth.middleware'; // Import authMiddleware
+import authMiddleware from '../middleware/auth.middleware';
 
 const router = express.Router();
 
-// User registration route with validation middleware
-router.post('/register', createUserHandler);
-router.post('/login', loginUserHandler); // Login route
-router.get('/verify-email', verifyEmail); // Moved verification route here
-router.post('/accept-invitation', acceptTenantInvitation); // Accept tenant invitation route
-router.post('/change-password-after-acceptance', changePasswordAfterAcceptance as RequestHandler); // Change password after accepting invitation route, casting to RequestHandler
-router.get('/users/me/:id', authMiddleware, getUser); // Add /api/users/me route, protected by authMiddleware
+// Properly typed async handler that returns void
+const asyncHandler = (fn: express.RequestHandler) => 
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    Promise.resolve(fn(req, res, next))
+      .then(() => {
+        if (!res.headersSent) {
+          next();
+        }
+      })
+      .catch(next);
+  };
 
+// Authentication routes
+router.post('/register', asyncHandler(AuthController.register as any));
+router.post('/login', asyncHandler(AuthController.login as any));
+router.get('/verify-email', asyncHandler(verifyEmail));
+
+// Add these routes only if implemented in controller
+if ('acceptInvitation' in AuthController) {
+  router.post('/accept-invitation', asyncHandler(AuthController.acceptInvitation as any));
+}
+if ('changePassword' in AuthController) {
+  router.post('/change-password', asyncHandler(AuthController.changePassword as any));
+}
+if ('getCurrentUser' in AuthController) {
+  router.get('/me', authMiddleware, asyncHandler(AuthController.getCurrentUser as any));
+}
 
 export default router;

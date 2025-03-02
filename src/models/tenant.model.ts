@@ -6,6 +6,7 @@ export interface ITenant extends Document {
   organizationId?: mongoose.Types.ObjectId;
   name: string;
   domain: string;
+  databaseUrl: string;
   tenantLogoUrl?: string; 
   contactEmail?: string;
   tenantTheme?: any;    
@@ -25,6 +26,11 @@ export interface ITenant extends Document {
 // Define the Tenant schema
 const tenantSchema: Schema<ITenant> = new Schema({
   tenantId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  databaseUrl: {
     type: String,
     required: true,
     unique: true,
